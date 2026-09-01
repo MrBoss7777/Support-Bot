@@ -40,8 +40,8 @@ WP_ADMIN       = "https://wa.me/994775838636"
 TG_ADMIN       = "https://t.me/S2Admin"
 SHOP_BOT_URL   = "https://t.me/Standoffshopping_Bot"
 
-GEMINI_TEXT_MODEL    = "gemini-2.0-flash-lite"
-GEMINI_VISION_MODEL  = "gemini-2.0-flash-lite"
+GEMINI_TEXT_MODEL   = "gemini-3.5-flash-lite"
+GEMINI_VISION_MODEL = "gemini-3.5-flash-lite"
 GEMINI_BASE_URL      = "https://generativelanguage.googleapis.com/v1beta/models"
 
 DATA_DIR = os.environ.get("DATA_DIR", "/data" if os.path.isdir("/data") else ".")
@@ -739,7 +739,6 @@ async def handle_text(message: Message, bot: Bot):
             reply_markup=contact_kb(lang) if ai.get("needs_admin") else None,
             parse_mode=ParseMode.HTML
         )
-
 # ═══════════════════════════════════════════════════════════════
 #  İŞƏ SAL
 # ═══════════════════════════════════════════════════════════════
@@ -752,6 +751,10 @@ async def main():
         BotCommand(command="lang",  description="Dil dəyiş"),
     ], scope=BotCommandScopeDefault())
     logger.info("✅ Support botu işə düşdü!")
+    
+    # Webhook toqquşmasının qarşısını alan tək sətirlik əlavəmiz:
+    await bot.delete_webhook(drop_pending_updates=True)
+    
     await dp.start_polling(bot)
 
 if __name__ == "__main__":
